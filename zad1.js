@@ -22,8 +22,8 @@ class CoffeMachine {
   }
   refill(coffe, water) {
     if (Number.isInteger(coffe) && Number.isInteger(water)) {
-      if (coffe > fillCoffe) return "Coffe added. You can fill more!";
-      else if (water > fillWater) return "Water added. You can fill more!";
+      if (coffe < fillCoffe) return "Coffe added. You can fill more!";
+      else if (water < fillWater) return "Water added. You can fill more!";
       else {
         this.coffeAmount = coffe;
         this.waterAmmount = water;
@@ -31,11 +31,16 @@ class CoffeMachine {
         return 200;
       }
     }
+
     throw new Error("Illegal type");
   }
   makeCoffe() {
-    this.coffeAmount -= 5;
-    this.waterAmmount -= 15;
+    if (this.coffeAmount > 5 && this.waterAmmount > 15) {
+      this.coffeAmount -= 5;
+      this.waterAmmount -= 15;
+    } else {
+      return "Machine can't make a coffe.";
+    }
   }
 }
 module.exports = CoffeMachine;

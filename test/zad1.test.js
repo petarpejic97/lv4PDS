@@ -23,27 +23,31 @@ describe("Coffe  Machine Class unit test: ", function () {
     });
   });
   describe("refil(int,int) method:", function () {
+    it("refil(int,int) mora vratiti poruku ako je kava dodana, ali nije napunjena do kraja.", function () {
+      assert.equal(testApp.refill(90, 1000), "Coffe added. You can fill more!");
+    });
+    it("refil(int,int) mora vratiti poruku ako je voda dodana, ali nije napunjena do kraja.", function () {
+      assert.equal(testApp.refill(100, 900), "Water added. You can fill more!");
+    });
     it("refil(int,int) mora vratiti status 200 ako je nadopuna uspješna", function () {
       assert.equal(testApp.refill(100, 1000), 200);
     });
     it("refil(int,int) vraća grešku ukoliko jedan od parametara nije int", function () {
       assert.throws(() => {
-        testApp.addQuote("100", 10);
+        testApp.refill("100", 10);
       }, Error);
     });
   });
-  /*describe("removeQuote() method:", function () {
-    it("removeQuote() mora vratiti status true ako rečenica postoji i obrisana iz liste", function () {
-      let testStatus = testApp.removeQuote(
-        "Nostalgia isn't what it used to be."
-      );
-      assert.isBoolean(testStatus);
-      assert.equal(testStatus, true);
+  describe("makeCoffe() method:", function () {
+    it("makeCoffe() napravila kavu", function () {
+      let oldCoffeValue = testApp.coffeAmount;
+      testApp.makeCoffe();
+      assert.isAbove(oldCoffeValue, testApp.coffeAmount);
     });
-    it("removeQuote() vraća grešku ukoliko prosljeđeni parametar nije znakovni tip", function () {
-      assert.throws(() => {
-        testApp.removeQuote(1234123);
-      }, Error);
+    it("makeCoffe() vraća poruku ako ne može napraviti kavu.", function () {
+      testApp.waterAmmount = 1;
+      testApp.coffeAmount = 1;
+      assert.equal(testApp.makeCoffe(), "Machine can't make a coffe.");
     });
-  });*/
+  });
 });
